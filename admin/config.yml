@@ -3,11 +3,9 @@ backend:
   branch: main
 
 locale: 'it'
-
 site_url: https://dilloaboncio.netlify.app
 display_url: https://dilloaboncio.netlify.app
-
-logo_url: logo_url: https://dilloaboncio.netlify.app/images/logo.png
+logo_url: https://dilloaboncio.netlify.app/images/logo.png
 
 media_folder: "images"
 public_folder: "/images"
