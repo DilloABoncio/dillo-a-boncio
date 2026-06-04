@@ -1,0 +1,31 @@
+backend:
+  name: github
+  repo: dilloaboncio/dillo-a-boncio
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "articoli"
+    label: "Articoli"
+    folder: "_articoli"
+    create: true
+    fields:
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["EuroLeague", "Basket Livornese", "Analisi", "Profili"]}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Immagine", name: "thumbnail", widget: "image", required: false}
+      - {label: "Contenuto", name: "body", widget: "markdown"}
+
+  - name: "episodi"
+    label: "Episodi Podcast"
+    folder: "_episodi"
+    create: true
+    fields:
+      - {label: "Numero", name: "number", widget: "number"}
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Durata", name: "duration", widget: "string"}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Link Spotify", name: "spotify", widget: "string", required: false}
+      - {label: "Descrizione", name: "body", widget: "markdown"}
