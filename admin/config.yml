@@ -7,7 +7,7 @@ locale: 'it'
 site_url: https://dilloaboncio.netlify.app
 display_url: https://dilloaboncio.netlify.app
 
-logo_url: https://dilloaboncio.netlify.app/images/logo.png
+logo_url: https://github.com/DilloABoncio/dillo-a-boncio/blob/32b351625091d236e0acd4dea2a6c88285476b24/ChatGPT%20Image%20Jun%203%2C%202026%2C%2010_02_50%20AM.png
 
 media_folder: "images"
 public_folder: "/images"
