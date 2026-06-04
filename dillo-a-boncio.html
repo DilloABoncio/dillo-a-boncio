@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dillo a Boncio — Podcast sul Basket Livornese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8500A;
+    --orange-dim: #9E3600;
+    --cream: #F4EFE6;
+    --ink: #0E0D0B;
+    --ink2: #1C1A16;
+    --ink3: #2E2B25;
+    --muted: #7A7166;
+    --divider: rgba(255,255,255,0.08);
+    --divider-light: rgba(14,13,11,0.1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14,13,11,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--orange);
+    padding: 0.45rem 1.1rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #ff6a20; }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border-bottom: 1px solid var(--divider);
+  }
+  .hero-left {
+    padding: 6rem 4rem 4rem 5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  .hero-left::before {
+    content: 'BASKET';
+    position: absolute;
+    left: -0.05em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 18vw, 22rem);
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--orange);
+  }
+  .hero-desc {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: rgba(244,239,230,0.6);
+    max-width: 38ch;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    line-height: 1.7;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-primary {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--orange);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #ff6a20; transform: translateY(-1px); }
+  .btn-secondary {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--cream); }
+  .btn-secondary svg { width: 18px; height: 18px; }
+
+  .hero-right {
+    position: relative;
+    background: var(--ink2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-right-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 3rem 2rem;
+    gap: 1px;
+    background: var(--divider);
+    border-left: 1px solid var(--divider);
+  }
+  .hero-stat-bar {
+    background: var(--ink2);
+    padding: 1.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .hero-stat-bar:hover { background: var(--ink3); }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .featured-tag {
+    background: var(--ink2);
+    border-left: 1px solid var(--divider);
+    padding: 1.5rem 2rem;
+  }
+  .featured-tag-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+  }
+  .featured-tag-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--orange);
+    padding: 0.6rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 30s linear infinite;
+    gap: 0;
+  }
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .ticker-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.35);
+    flex-shrink: 0;
+  }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1.25rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+  }
+  .section-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .section-link:hover { text-decoration: underline; }
+
+  /* FEATURED ARTICLE GRID */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+  }
+  .article-card {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: background 0.25s;
+  }
+  .article-card:hover { background: var(--ink2); }
+  .article-card.tall { grid-row: span 2; }
+  .card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(40%) contrast(1.1);
+    opacity: 0.7;
+    transition: opacity 0.3s, filter 0.3s;
+  }
+  .article-card.tall .card-image { height: 320px; }
+  .article-card:hover .card-image { opacity: 0.9; filter: grayscale(20%) contrast(1.05); }
+  .card-image-placeholder {
+    width: 100%;
+    height: 220px;
+    background: var(--ink3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .article-card.tall .card-image-placeholder { height: 320px; }
+  .card-image-placeholder .bg-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    letter-spacing: 0.05em;
+  }
+  .card-image-placeholder .icon-wrap {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--divider);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .card-image-placeholder svg { width: 26px; height: 26px; stroke: var(--muted); fill: none; }
+  .card-body { padding: 1.5rem; }
+  .card-category {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.6rem;
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+  .article-card.tall .card-title { font-size: 1.6rem; }
+  .card-excerpt {
+    font-size: 0.875rem;
+    color: rgba(244,239,230,0.5);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .card-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+  /* PODCAST SECTION */
+  .podcast-section {
+    background: var(--ink2);
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+  .podcast-section section {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .podcast-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(232,80,10,0.12);
+    border: 1px solid rgba(232,80,10,0.25);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .podcast-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .podcast-badge span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .podcast-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .podcast-desc {
+    font-size: 0.95rem;
+    color: rgba(244,239,230,0.55);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 42ch;
+  }
+  .platform-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .platform-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--divider);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .platform-link:hover { border-color: var(--orange); color: var(--orange); }
+  .platform-link svg { width: 16px; height: 16px; fill: currentColor; }
+  .episode-list { display: flex; flex-direction: column; gap: 1px; background: var(--divider); border: 1px solid var(--divider); }
+  .episode-item {
+    background: var(--ink2);
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1.25rem;
+    align-items: start;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .episode-item:hover { background: var(--ink3); }
+  .ep-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: rgba(244,239,230,0.12);
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .ep-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+  .ep-meta {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: flex;
+    gap: 0.75rem;
+  }
+  .play-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .episode-item:hover .play-btn { border-color: var(--orange); background: rgba(232,80,10,0.1); }
+  .play-btn svg { width: 12px; height: 12px; fill: var(--cream); margin-left: 2px; }
+
+  /* EUROLEAGUE SECTION */
+  .euroleague-header {
+    background: linear-gradient(135deg, var(--ink2) 0%, #1a0d00 100%);
+    border-left: 3px solid var(--orange);
+    padding: 2rem 2.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .el-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--orange);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .el-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; color: var(--cream); }
+  .el-subtitle { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+  .articles-list { display: flex; flex-direction: column; gap: 1px; background: var(--divider); }
+  .article-row {
+    background: var(--ink);
+    padding: 1.75rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .article-row:hover { background: var(--ink2); }
+  .article-row-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    padding-top: 3px;
+    opacity: 0.5;
+  }
+  .article-row-category {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.4rem;
+  }
+  .article-row-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+  }
+  .article-row-meta { font-size: 0.7rem; color: var(--muted); }
+  .article-row-arrow { font-size: 1.2rem; color: var(--muted); padding-top: 3px; }
+  .article-row:hover .article-row-arrow { color: var(--orange); }
+
+  /* FORMAT EXPLAINER */
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+    margin-top: 3rem;
+  }
+  .format-card {
+    background: var(--ink);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .format-card:hover { background: var(--ink2); }
+  .format-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--orange);
+    opacity: 0.7;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .format-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .format-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+  /* NEWSLETTER */
+  .newsletter-band {
+    background: var(--orange);
+    padding: 4rem 2rem;
+  }
+  .newsletter-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .nl-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 0.95;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .nl-subtitle { font-size: 0.95rem; color: rgba(14,13,11,0.6); margin-top: 0.75rem; line-height: 1.6; }
+  .nl-form { display: flex; gap: 0; }
+  .nl-input {
+    flex: 1;
+    background: rgba(14,13,11,0.12);
+    border: 1.5px solid rgba(14,13,11,0.25);
+    border-right: none;
+    padding: 0.9rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    color: var(--ink);
+    outline: none;
+    border-radius: 2px 0 0 2px;
+    transition: border-color 0.2s;
+  }
+  .nl-input::placeholder { color: rgba(14,13,11,0.4); }
+  .nl-input:focus { border-color: rgba(14,13,11,0.6); background: rgba(14,13,11,0.18); }
+  .nl-btn {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--ink);
+    padding: 0.9rem 1.75rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .nl-btn:hover { background: var(--ink2); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid var(--divider);
+    padding: 4rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 2rem;
+  }
+  .footer-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+  .footer-brand-name span { color: var(--orange); }
+  .footer-tagline { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 28ch; }
+  .footer-col-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a {
+    font-size: 0.85rem;
+    color: rgba(244,239,230,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: rgba(244,239,230,0.2);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { display: none; }
+    .hero-left { padding: 5rem 1.5rem 3rem; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .article-card.tall { grid-row: auto; }
+    .podcast-section section { grid-template-columns: 1fr; gap: 3rem; }
+    .format-grid { grid-template-columns: 1fr; }
+    .newsletter-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Dillo <span>a</span> Boncio</a>
+  <ul class="nav-links">
+    <li><a href="#podcast">Podcast</a></li>
+    <li><a href="#euroleague">EuroLeague</a></li>
+    <li><a href="#articoli">Articoli</a></li>
+    <li><a href="#livorno">Basket Livornese</a></li>
+  </ul>
+  <a href="#newsletter" class="nav-cta">Newsletter</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Podcast · Basket · Livorno</p>
+    <h1 class="hero-title">Dillo<br><em>a</em><br>Boncio</h1>
+    <p class="hero-desc">La voce del basket livornese. Analisi, storie, e il meglio dell'EuroLeague — raccontati con passione e senza filtri.</p>
+    <div class="hero-actions">
+      <a href="#podcast" class="btn-primary">Ascolta il Podcast</a>
+      <a href="#articoli" class="btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M9 16h6M9 8h6M5 4h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
+        Leggi gli Articoli
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="hero-stat-bar">
+        <span class="stat-number">48</span>
+        <span class="stat-label">Episodi<br>pubblicati</span>
+      </div>
+      <div class="hero-stat-bar">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Stagioni<br>di basket</span>
+      </div>
+      <div class="hero-stat-bar">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Livornese<br>DOC</span>
+      </div>
+      <div class="featured-tag" style="margin-top: auto;">
+        <p class="featured-tag-label">Ultimo Episodio</p>
+        <p class="featured-tag-title">EuroLeague 2024–25: il nuovo formato spiegato bene</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Basket Livornese <span class="ticker-dot"></span></span>
+    <span class="ticker-item">EuroLeague Analysis <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nuovo Formato 2025 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Dillo a Boncio Podcast <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pallacanestro Livorno <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Play-In Tournament <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Analisi Tattica <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Storie del Basket <span class="ticker-dot"></span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Basket Livornese <span class="ticker-dot"></span></span>
+    <span class="ticker-item">EuroLeague Analysis <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Nuovo Formato 2025 <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Dillo a Boncio Podcast <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Pallacanestro Livorno <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Play-In Tournament <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Analisi Tattica <span class="ticker-dot"></span></span>
+    <span class="ticker-item">Storie del Basket <span class="ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- FEATURED ARTICLES -->
+<section id="articoli">
+  <div class="section-header">
+    <h2 class="section-title">In Evidenza</h2>
+    <a href="#" class="section-link">Tutti gli Articoli →</a>
+  </div>
+  <div class="featured-grid">
+    <a href="#" class="article-card tall">
+      <div class="card-image-placeholder" style="height:320px;">
+        <span class="bg-text">EL</span>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20M12 2a14.5 14.5 0 010 20M2 12h20"/></svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-category">EuroLeague · Analisi</p>
+        <h3 class="card-title">Il nuovo formato EuroLeague 2024–25: cosa cambia e perché conta</h3>
+        <p class="card-excerpt">Il basket europeo si trasforma. Con l'introduzione del formato a 18 squadre, play-in integrato e nuova struttura a fase unica, l'EuroLeague punta a un prodotto più compatto, televisivo e globale. Analizziamo ogni dettaglio.</p>
+        <div class="card-meta">
+          <span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            8 min
+          </span>
+          <span>3 Giugno 2025</span>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="card-image-placeholder">
+        <span class="bg-text">LI</span>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-category">Basket Livornese</p>
+        <h3 class="card-title">La stagione dell'Unicusano Pielle: bilancio e prospettive</h3>
+        <p class="card-excerpt">Una stagione fatta di alti e bassi per il basket labronico. Cosa ha funzionato e cosa no.</p>
+        <div class="card-meta">
+          <span>5 min</span>
+          <span>28 Maggio 2025</span>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="article-card">
+      <div class="card-image-placeholder">
+        <span class="bg-text">FF</span>
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-category">Profili · EuroLeague</p>
+        <h3 class="card-title">I 5 giocatori da seguire nel play-in EuroLeague</h3>
+        <p class="card-excerpt">Dal talento di Sergio Llull all'esplosività dei giovani: chi può fare la differenza nella nuova fase eliminazione.</p>
+        <div class="card-meta">
+          <span>6 min</span>
+          <span>20 Maggio 2025</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- PODCAST SECTION -->
+<div class="podcast-section" id="podcast">
+  <section>
+    <div>
+      <div class="podcast-badge">
+        <span class="podcast-badge-dot"></span>
+        <span>Ora disponibile</span>
+      </div>
+      <h2 class="podcast-headline">IL PODCAST<br>SUL BASKET<br>LIVORNESE</h2>
+      <p class="podcast-desc">Ogni episodio un'immersione nel basket locale e internazionale. Ospiti, analisi tattiche, storie dimenticate e tanto EuroLeague — con la voce di chi vive questo sport.</p>
+      <div class="platform-links">
+        <a href="#" class="platform-link">
+          <svg viewBox="0 0 24 24"><path d="M12.003 0C5.376 0 0 5.376 0 12.003c0 6.628 5.376 12.004 12.003 12.004C18.63 24.007 24 18.631 24 12.003 24 5.376 18.63 0 12.003 0zm4.498 17.41c-.186.32-.578.42-.898.237-2.458-1.506-5.551-1.847-9.192-.867-.352.077-.703-.141-.78-.492-.08-.351.141-.703.492-.78 3.982-1.059 7.408-.642 10.14 1.004.32.186.42.578.238.898zm1.198-2.668c-.234.38-.726.5-1.105.266-2.814-1.729-7.105-2.23-10.435-1.22-.43.129-.885-.112-1.014-.54-.13-.43.112-.884.54-1.014 3.803-1.154 8.528-.595 11.752 1.392.38.234.5.726.262 1.116zm.103-2.777C14.37 10.164 9.02 9.99 6.19 10.83c-.516.155-1.062-.135-1.217-.651-.155-.516.135-1.062.651-1.217 3.243-.985 8.64-.795 12.05 1.326.463.274.615.875.337 1.335-.274.462-.875.614-1.337.342z"/></svg>
+          Spotify
+        </a>
+        <a href="#" class="platform-link">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Apple Podcasts
+        </a>
+        <a href="#" class="platform-link">
+          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="episode-list">
+        <a href="#" class="episode-item">
+          <span class="ep-number">48</span>
+          <div>
+            <p class="ep-title">EuroLeague 2024–25: tutto sul nuovo formato a 18 squadre</p>
+            <div class="ep-meta"><span>45 min</span><span>3 Giu 2025</span></div>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <a href="#" class="episode-item">
+          <span class="ep-number">47</span>
+          <div>
+            <p class="ep-title">Playoff A2: la Toscana Basket si racconta</p>
+            <div class="ep-meta"><span>38 min</span><span>26 Mag 2025</span></div>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <a href="#" class="episode-item">
+          <span class="ep-number">46</span>
+          <div>
+            <p class="ep-title">Il Draft NBA visto da Livorno: chi tifare?</p>
+            <div class="ep-meta"><span>52 min</span><span>18 Mag 2025</span></div>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <a href="#" class="episode-item">
+          <span class="ep-number">45</span>
+          <div>
+            <p class="ep-title">Fenerbahçe vs Real Madrid: analisi della finale anticipata</p>
+            <div class="ep-meta"><span>41 min</span><span>10 Mag 2025</span></div>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- EUROLEAGUE SECTION -->
+<section id="euroleague">
+  <div class="section-header">
+    <h2 class="section-title">EuroLeague</h2>
+    <a href="#" class="section-link">Tutti gli Articoli →</a>
+  </div>
+  <div class="euroleague-header">
+    <span class="el-icon">EL</span>
+    <div>
+      <p class="el-title">Il Nuovo Formato EuroLeague — Guida Completa</p>
+      <p class="el-subtitle">18 squadre · Fase unica · Play-in integrato · Più basket, più drama</p>
+    </div>
+  </div>
+  <div class="articles-list">
+    <a href="#" class="article-row">
+      <span class="article-row-number">01</span>
+      <div>
+        <p class="article-row-category">Analisi Formato</p>
+        <p class="article-row-title">Da 18 a 8: come funziona la nuova regular season EuroLeague</p>
+        <p class="article-row-meta">7 min · 2 Giugno 2025</p>
+      </div>
+      <span class="article-row-arrow">→</span>
+    </a>
+    <a href="#" class="article-row">
+      <span class="article-row-number">02</span>
+      <div>
+        <p class="article-row-category">Play-In</p>
+        <p class="article-row-title">Il play-in EuroLeague: il modello NBA trasferito in Europa funziona?</p>
+        <p class="article-row-meta">6 min · 28 Maggio 2025</p>
+      </div>
+      <span class="article-row-arrow">→</span>
+    </a>
+    <a href="#" class="article-row">
+      <span class="article-row-number">03</span>
+      <div>
+        <p class="article-row-category">Squadre</p>
+        <p class="article-row-title">Le 18 squadre del 2025–26: chi entra, chi rischia, chi rimane</p>
+        <p class="article-row-meta">9 min · 22 Maggio 2025</p>
+      </div>
+      <span class="article-row-arrow">→</span>
+    </a>
+    <a href="#" class="article-row">
+      <span class="article-row-number">04</span>
+      <div>
+        <p class="article-row-category">Opinione</p>
+        <p class="article-row-title">Il mercato televisivo cambia tutto: perché l'EuroLeague guarda a ovest</p>
+        <p class="article-row-meta">5 min · 15 Maggio 2025</p>
+      </div>
+      <span class="article-row-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- FORMAT EXPLAINER CARDS -->
+  <div class="format-grid">
+    <div class="format-card">
+      <p class="format-icon">18</p>
+      <h3 class="format-title">18 Squadre Partecipanti</h3>
+      <p class="format-desc">La nuova EuroLeague allarga il campo. Due squadre in più rispetto alla stagione precedente, con nuove licenze e wild card per le vincitrici delle coppe nazionali.</p>
+    </div>
+    <div class="format-card">
+      <p class="format-icon">34</p>
+      <h3 class="format-title">Partite di Regular Season</h3>
+      <p class="format-desc">Ogni squadra affronta tutte le avversarie una volta, per un totale di 34 gare. Un formato più snello ma altrettanto esigente, con meno margine di errore.</p>
+    </div>
+    <div class="format-card">
+      <p class="format-icon">PI</p>
+      <h3 class="format-title">Play-In Tournament</h3>
+      <p class="format-desc">Le classificate dal 5° all'8° posto si sfidano in un mini-torneo ad eliminazione. Chi vince accede ai quarti di finale, chi perde viene eliminato. Drama garantito.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-band" id="newsletter">
+  <div class="newsletter-inner">
+    <div>
+      <h2 class="nl-title">Non Perdere<br>Nessun Episodio</h2>
+      <p class="nl-subtitle">Ricevi ogni settimana i nuovi episodi, gli articoli freschi e le analisi EuroLeague direttamente nella tua inbox.</p>
+    </div>
+    <div>
+      <div class="nl-form">
+        <input class="nl-input" type="email" placeholder="La tua email...">
+        <button class="nl-btn">Iscriviti</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <p class="footer-brand-name">Dillo <span>a</span> Boncio</p>
+        <p class="footer-tagline">Il podcast indipendente sul basket livornese e l'analisi dell'EuroLeague. Fatto con passione, da Livorno.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Podcast</p>
+        <ul class="footer-links">
+          <li><a href="#">Tutti gli Episodi</a></li>
+          <li><a href="#">Spotify</a></li>
+          <li><a href="#">Apple Podcasts</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Articoli</p>
+        <ul class="footer-links">
+          <li><a href="#">EuroLeague</a></li>
+          <li><a href="#">Basket Livornese</a></li>
+          <li><a href="#">Analisi Tattiche</a></li>
+          <li><a href="#">Profili Giocatori</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Info</p>
+        <ul class="footer-links">
+          <li><a href="#">Chi Siamo</a></li>
+          <li><a href="#">Contatti</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Dillo a Boncio. Tutti i diritti riservati.</span>
+      <span>Fatto a Livorno 🐳</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
