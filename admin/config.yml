@@ -1,0 +1,39 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: 'it'
+site_url: https://dilloaboncio.netlify.app
+display_url: https://dilloaboncio.netlify.app
+logo_url: https://dilloaboncio.netlify.app/images/logo.png
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "articoli"
+    label: "Articoli"
+    folder: "_articoli"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["EuroLeague", "Basket Livornese", "Analisi", "Profili"]}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Immagine di copertina", name: "thumbnail", widget: "image", required: false}
+      - {label: "Estratto", name: "excerpt", widget: "text"}
+      - {label: "Contenuto", name: "body", widget: "markdown"}
+
+  - name: "episodi"
+    label: "Episodi Podcast"
+    folder: "_episodi"
+    create: true
+    slug: "{{number}}-{{slug}}"
+    fields:
+      - {label: "Numero Episodio", name: "number", widget: "number"}
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Durata", name: "duration", widget: "string", hint: "Es: 45 min"}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Link Spotify", name: "spotify", widget: "string", required: false}
+      - {label: "Link Apple Podcasts", name: "apple", widget: "string", required: false}
+      - {label: "Descrizione", name: "body", widget: "markdown"}
