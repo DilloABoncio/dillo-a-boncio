@@ -1,0 +1,215 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articoli = await getCollection('articoli');
+const euroleague = articoli
+  .filter(a => a.data.category === 'EuroLeague' || a.data.category === 'Analisi')
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+<Base title="EuroLeague">
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--ink2) 0%, #1a0d00 100%);
+    border-bottom: 3px solid var(--orange);
+    padding: 4rem 2rem;
+  }
+  .page-header-inner { max-width: 1280px; margin: 0 auto; }
+  .page-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .page-eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .page-desc {
+    font-size: 0.95rem;
+    color: rgba(244,239,230,0.5);
+    line-height: 1.7;
+    max-width: 50ch;
+  }
+  .format-band {
+    background: var(--ink2);
+    border-bottom: 1px solid var(--divider);
+  }
+  .format-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+  }
+  .format-card {
+    background: var(--ink2);
+    padding: 2rem;
+  }
+  .format-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--orange);
+    opacity: 0.7;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .format-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .format-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+  .articles-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--cream);
+  }
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+  }
+  .article-row {
+    background: var(--ink);
+    padding: 1.75rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .article-row:hover { background: var(--ink2); }
+  .article-row-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: var(--orange);
+    opacity: 0.5;
+    padding-top: 3px;
+  }
+  .article-row-category {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.4rem;
+  }
+  .article-row-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+  }
+  .article-row-meta { font-size: 0.7rem; color: var(--muted); }
+  .article-row-arrow { font-size: 1.2rem; color: var(--muted); padding-top: 3px; }
+  .article-row:hover .article-row-arrow { color: var(--orange); }
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    background: var(--ink);
+  }
+  .empty-state h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 900px) {
+    .format-inner { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Copertura completa</p>
+    <h1 class="page-title">EuroLeague</h1>
+    <p class="page-desc">Analisi, tattiche, e tutto sul nuovo formato EuroLeague 2025. La competizione più importante del basket europeo raccontata da Livorno.</p>
+  </div>
+</div>
+
+<div class="format-band">
+  <div class="format-inner">
+    <div class="format-card">
+      <p class="format-icon">18</p>
+      <h3 class="format-title">18 Squadre Partecipanti</h3>
+      <p class="format-desc">La nuova EuroLeague allarga il campo con due squadre in più rispetto alla stagione precedente.</p>
+    </div>
+    <div class="format-card">
+      <p class="format-icon">34</p>
+      <h3 class="format-title">Partite di Regular Season</h3>
+      <p class="format-desc">Ogni squadra affronta tutte le avversarie una volta, per un totale di 34 gare.</p>
+    </div>
+    <div class="format-card">
+      <p class="format-icon">PI</p>
+      <h3 class="format-title">Play-In Tournament</h3>
+      <p class="format-desc">Le classificate dal 5° all'8° posto si sfidano in un mini-torneo ad eliminazione diretta.</p>
+    </div>
+  </div>
+</div>
+
+<div class="articles-section">
+  <div class="section-header">
+    <h2 class="section-title">Tutti gli Articoli EuroLeague</h2>
+  </div>
+  <div class="articles-list">
+    {euroleague.length === 0 ? (
+      <div class="empty-state">
+        <h2>Nessun articolo ancora</h2>
+        <p>Gli articoli EuroLeague appariranno qui automaticamente.</p>
+      </div>
+    ) : (
+      euroleague.map((articolo, i) => (
+        <a href={`/articoli/${articolo.slug}`} class="article-row">
+          <span class="article-row-number">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="article-row-category">{articolo.data.category}</p>
+            <p class="article-row-title">{articolo.data.title}</p>
+            <p class="article-row-meta">{new Date(articolo.data.date).toLocaleDateString('it-IT', {day:'numeric',month:'long',year:'numeric'})}</p>
+          </div>
+          <span class="article-row-arrow">→</span>
+        </a>
+      ))
+    )}
+  </div>
+</div>
+</Base>

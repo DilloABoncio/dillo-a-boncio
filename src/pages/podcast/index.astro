@@ -1,0 +1,183 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const episodi = await getCollection('episodi');
+const sorted = episodi.sort((a, b) => b.data.number - a.data.number);
+---
+<Base title="Podcast">
+<style>
+  .page-header {
+    background: var(--ink2);
+    border-bottom: 1px solid var(--divider);
+    padding: 4rem 2rem;
+  }
+  .page-header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+  }
+  .page-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .page-eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .page-desc {
+    font-size: 0.95rem;
+    color: rgba(244,239,230,0.5);
+    line-height: 1.7;
+    max-width: 40ch;
+  }
+  .platform-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-self: end;
+  }
+  .platform-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--divider);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .platform-link:hover { border-color: var(--orange); color: var(--orange); }
+  .episodes-list {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+  .episode-item {
+    background: var(--ink);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 4rem 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .episode-item:hover { background: var(--ink2); }
+  .ep-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: rgba(244,239,230,0.1);
+    line-height: 1;
+  }
+  .ep-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.4;
+    margin-bottom: 0.4rem;
+  }
+  .ep-meta {
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+  }
+  .ep-duration {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border: 1px solid var(--divider);
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 6rem 2rem;
+    color: var(--muted);
+    background: var(--ink);
+  }
+  .empty-state h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 900px) {
+    .page-header-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .episode-item { grid-template-columns: 3rem 1fr; }
+    .ep-duration { display: none; }
+  }
+</style>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <p class="page-eyebrow">Il Podcast</p>
+      <h1 class="page-title">IL PODCAST<br>SUL BASKET<br>LIVORNESE</h1>
+      <p class="page-desc">Ogni episodio un'immersione nel basket locale e internazionale. Ospiti, analisi tattiche, storie dimenticate e tanto EuroLeague.</p>
+    </div>
+    <div class="platform-links">
+      <a href="#" class="platform-link">Spotify</a>
+      <a href="#" class="platform-link">Apple Podcasts</a>
+      <a href="#" class="platform-link">YouTube</a>
+    </div>
+  </div>
+</div>
+
+<div class="episodes-list">
+  {sorted.length === 0 ? (
+    <div class="empty-state">
+      <h2>Nessun episodio ancora</h2>
+      <p>Gli episodi pubblicati dal CMS appariranno qui automaticamente.</p>
+    </div>
+  ) : (
+    sorted.map(ep => (
+      <a href={`/podcast/${ep.slug}`} class="episode-item">
+        <span class="ep-number">{ep.data.number}</span>
+        <div>
+          <p class="ep-title">{ep.data.title}</p>
+          <div class="ep-meta">
+            <span>{new Date(ep.data.date).toLocaleDateString('it-IT', {day:'numeric',month:'short',year:'numeric'})}</span>
+            {ep.data.spotify && <a href={ep.data.spotify} style="color:var(--orange)">Spotify</a>}
+          </div>
+        </div>
+        <span class="ep-duration">{ep.data.duration}</span>
+      </a>
+    ))
+  )}
+</div>
+</Base>

@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Newsletter">
+<style>
+  .newsletter-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter-hero::before {
+    content: 'NEWS';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(8rem, 20vw, 22rem);
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .newsletter-inner {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .page-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .page-eyebrow::before, .page-eyebrow::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .page-desc {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(244,239,230,0.6);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .nl-form {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto 1.5rem;
+  }
+  .nl-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid var(--divider);
+    border-right: none;
+    padding: 1rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    color: var(--cream);
+    outline: none;
+    border-radius: 2px 0 0 2px;
+    transition: border-color 0.2s;
+  }
+  .nl-input::placeholder { color: var(--muted); }
+  .nl-input:focus { border-color: var(--orange); }
+  .nl-btn {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--orange);
+    padding: 1rem 1.75rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .nl-btn:hover { background: #ff6a20; }
+  .nl-fine {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .perks {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--divider);
+    border: 1px solid var(--divider);
+  }
+  .perk {
+    background: var(--ink2);
+    padding: 2rem;
+  }
+  .perk-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--orange);
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+  .perk-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .perk-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+  @media (max-width: 900px) {
+    .perks { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="newsletter-hero">
+  <div class="newsletter-inner">
+    <p class="page-eyebrow">Resta aggiornato</p>
+    <h1 class="page-title">Non perdere<br>nulla</h1>
+    <p class="page-desc">Nuovi episodi, articoli freschi e analisi EuroLeague direttamente nella tua inbox. Niente spam, solo basket.</p>
+    <form class="nl-form" name="newsletter" method="POST" data-netlify="true">
+      <input class="nl-input" type="email" name="email" placeholder="La tua email..." required>
+      <button class="nl-btn" type="submit">Iscriviti</button>
+    </form>
+    <p class="nl-fine">Gratis. Niente spam. Cancellati quando vuoi.</p>
+  </div>
+</div>
+
+<div class="perks">
+  <div class="perk">
+    <p class="perk-icon">EP</p>
+    <h3 class="perk-title">Nuovi Episodi</h3>
+    <p class="perk-desc">Ricevi una notifica ogni volta che pubblichiamo un nuovo episodio del podcast, con un riassunto dei temi trattati.</p>
+  </div>
+  <div class="perk">
+    <p class="perk-icon">EL</p>
+    <h3 class="perk-title">Analisi EuroLeague</h3>
+    <p class="perk-desc">Le nostre analisi sul nuovo formato EuroLeague, i risultati della settimana e i approfondimenti tattici.</p>
+  </div>
+  <div class="perk">
+    <p class="perk-icon">LI</p>
+    <h3 class="perk-title">Basket Livornese</h3>
+    <p class="perk-desc">Aggiornamenti sulla scena locale, le partite del weekend e le storie dal basket labronico.</p>
+  </div>
+</div>
+</Base>
