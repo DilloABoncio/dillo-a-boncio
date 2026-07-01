@@ -154,7 +154,7 @@ const livornese = articoli
     </div>
   ) : (
     livornese.map(articolo => (
-      <a href={`/articoli/${articolo.slug}`} class="article-card">
+      <a href={`/articoli/${articolo.id}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
         {articolo.data.thumbnail
           ? <img src={articolo.data.thumbnail} alt={articolo.data.title} class="card-thumb" />
           : <div class="card-placeholder"><span class="card-placeholder-text">LI</span></div>
