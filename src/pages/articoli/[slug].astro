@@ -1,0 +1,125 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articoli = await getCollection('articoli');
+  return articoli.map(articolo => ({
+    params: { slug: articolo.id },
+    props: { articolo },
+  }));
+}
+
+const { articolo } = Astro.props;
+const { Content } = await articolo.render();
+---
+<Base title={articolo.data.title} description={articolo.data.excerpt}>
+<style>
+  .article-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .article-category {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .article-category::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .article-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .article-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
+  }
+  .article-thumb {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 3rem;
+  }
+  .article-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(244,239,230,0.85);
+  }
+  .article-body h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--cream);
+    margin: 2.5rem 0 1rem;
+  }
+  .article-body h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin: 2rem 0 0.75rem;
+  }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body a { color: var(--orange); }
+  .article-body strong { color: var(--cream); font-weight: 700; }
+  .article-body blockquote {
+    border-left: 3px solid var(--orange);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(244,239,230,0.7);
+  }
+</style>
+
+<div class="article-hero">
+  <a href="/articoli" class="back-link">← Tutti gli Articoli</a>
+  <p class="article-category">{articolo.data.category}</p>
+  <h1 class="article-title">{articolo.data.title}</h1>
+  <p class="article-meta">
+    {new Date(articolo.data.date).toLocaleDateString('it-IT', {day:'numeric', month:'long', year:'numeric'})}
+  </p>
+  {articolo.data.thumbnail && (
+    <img src={articolo.data.thumbnail} alt={articolo.data.title} class="article-thumb" />
+  )}
+</div>
+
+<div class="article-body">
+  <Content />
+</div>
+</Base>
