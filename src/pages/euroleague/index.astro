@@ -199,7 +199,7 @@ const euroleague = articoli
       </div>
     ) : (
       euroleague.map((articolo, i) => (
-        <a href={`/articoli/${articolo.slug}`} class="article-row">
+        <a href={`/articoli/${articolo.id}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
           <span class="article-row-number">{String(i + 1).padStart(2, '0')}</span>
           <div>
             <p class="article-row-category">{articolo.data.category}</p>
