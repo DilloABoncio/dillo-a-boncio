@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const episodi = await getCollection('episodi');
+  return episodi.map(ep => ({
+    params: { slug: ep.id },
+    props: { ep },
+  }));
+}
+
+const { ep } = Astro.props;
+const { Content } = await ep.render();
+---
+<Base title={ep.data.title}>
+<style>
+  .ep-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem 3rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .ep-number-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ep-number-badge::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--orange);
+    display: block;
+  }
+  .ep-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .ep-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 2rem;
+  }
+  .platform-links { display: flex; gap: 0.75rem; margin-bottom: 3rem; }
+  .platform-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid var(--divider);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .platform-link:hover { border-color: var(--orange); color: var(--orange); }
+  .ep-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(244,239,230,0.85);
+  }
+  .ep-body p { margin-bottom: 1.5rem; }
+  .ep-body a { color: var(--orange); }
+</style>
+
+<div class="ep-hero">
+  <a href="/podcast" class="back-link">← Tutti gli Episodi</a>
+  <p class="ep-number-badge">Episodio {ep.data.number}</p>
+  <h1 class="ep-title">{ep.data.title}</h1>
+  <div class="ep-meta">
+    <span>{new Date(ep.data.date).toLocaleDateString('it-IT', {day:'numeric',month:'long',year:'numeric'})}</span>
+    <span>{ep.data.duration}</span>
+  </div>
+  <div class="platform-links">
+    {ep.data.spotify && <a href={ep.data.spotify} class="platform-link">Ascolta su Spotify</a>}
+    {ep.data.apple && <a href={ep.data.apple} class="platform-link">Apple Podcasts</a>}
+  </div>
+</div>
+
+<div class="ep-body">
+  <Content />
+</div>
+</Base>
