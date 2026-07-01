@@ -140,7 +140,7 @@ const sorted = articoli.sort((a, b) => new Date(b.data.date).getTime() - new Dat
     </div>
   ) : (
     sorted.map(articolo => (
-      <a href={`/articoli/${articolo.slug}`} class="article-card">
+      <a href={`/articoli/${articolo.id}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
         {articolo.data.thumbnail
           ? <img src={articolo.data.thumbnail} alt={articolo.data.title} class="card-thumb" />
           : <div class="card-placeholder"><span class="card-placeholder-text">{articolo.data.category.slice(0,2).toUpperCase()}</span></div>
