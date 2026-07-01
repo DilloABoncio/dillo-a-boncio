@@ -1,17 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const episodi = await getCollection('episodi');
-  return episodi.map(ep => ({
-    params: { slug: ep.id },
-    props: { ep },
+  const articoli = await getCollection('articoli');
+  return articoli.map(articolo => ({
+    params: { slug: articolo.id },
+    props: { articolo },
   }));
 }
 
-const { ep } = Astro.props;
-const { Content } = await ep.render();
+const { articolo } = Astro.props;
+const { Content } = await render(articolo);
 ---
 <Base title={ep.data.title}>
 <style>
