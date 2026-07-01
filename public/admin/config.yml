@@ -2,16 +2,13 @@ backend:
   name: github
   repo: DilloABoncio/dillo-a-boncio
   branch: main
-backend:
-  name: github
-  repo: DilloABoncio/dillo-a-boncio
-  branch: main
   base_url: https://dillo-a-boncio.pages.dev
   auth_endpoint: api/auth
+
 locale: 'it'
-site_url: https://dilloaboncio.pages.dev
-display_url: https://dilloaboncio.pages.dev
-logo_url: https://dilloaboncio.pages.dev/images/logo.png
+site_url: https://dillo-a-boncio.pages.dev
+display_url: https://dillo-a-boncio.pages.dev
+logo_url: https://dillo-a-boncio.pages.dev/images/logo.png
 
 media_folder: "public/images"
 public_folder: "/images"
