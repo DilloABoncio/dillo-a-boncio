@@ -8,6 +8,7 @@ backend:
 locale: 'it'
 site_url: https://dillo-a-boncio.pages.dev
 display_url: https://dillo-a-boncio.pages.dev
+base_url: https://dillo-a-boncio.pages.dev
 logo_url: https://dillo-a-boncio.pages.dev/images/logo.png
 
 media_folder: "public/images"
