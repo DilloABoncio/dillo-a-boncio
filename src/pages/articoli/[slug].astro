@@ -1,156 +1,125 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const articoli = await getCollection('articoli');
-const sorted = articoli.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+export async function getStaticPaths() {
+  const articoli = await getCollection('articoli');
+  return articoli.map(articolo => ({
+    params: { slug: articolo.id },
+    props: { articolo },
+  }));
+}
+
+const { articolo } = Astro.props;
+const { Content } = await render(articolo);
 ---
-<Base title="Articoli">
+<Base title={articolo.data.title} description={articolo.data.excerpt}>
 <style>
-  .page-header {
-    background: var(--ink2);
-    border-bottom: 1px solid var(--divider);
-    padding: 4rem 2rem;
+  .article-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem 2rem;
   }
-  .page-header-inner { max-width: 1280px; margin: 0 auto; }
-  .page-eyebrow {
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .article-category {
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--orange);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
   }
-  .page-eyebrow::before {
+  .article-category::before {
     content: '';
     width: 2rem;
     height: 1px;
     background: var(--orange);
     display: block;
   }
-  .page-title {
+  .article-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 6vw, 6rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: 0.95;
     color: var(--cream);
-    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
   }
-  .articles-grid {
-    max-width: 1280px;
-    margin: 4rem auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--divider);
-    border: 1px solid var(--divider);
-  }
-  .article-card {
-    background: var(--ink);
-    text-decoration: none;
-    display: block;
-    transition: background 0.25s;
-  }
-  .article-card:hover { background: var(--ink2); }
-  .card-thumb {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    filter: grayscale(30%);
-    opacity: 0.7;
-    transition: opacity 0.3s;
-  }
-  .article-card:hover .card-thumb { opacity: 0.9; }
-  .card-placeholder {
-    width: 100%;
-    height: 200px;
-    background: var(--ink3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card-placeholder-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem;
-    color: rgba(255,255,255,0.05);
-  }
-  .card-body { padding: 1.5rem; }
-  .card-category {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 0.5rem;
-  }
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    line-height: 1.35;
-    color: var(--cream);
-    margin-bottom: 0.5rem;
-  }
-  .card-excerpt {
-    font-size: 0.825rem;
-    color: rgba(244,239,230,0.45);
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  .card-date { font-size: 0.7rem; color: var(--muted); }
-  .empty-state {
-    grid-column: span 3;
-    text-align: center;
-    padding: 6rem 2rem;
+  .article-meta {
+    font-size: 0.75rem;
     color: var(--muted);
-    background: var(--ink);
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
   }
-  .empty-state h2 {
+  .article-thumb {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 3rem;
+  }
+  .article-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(244,239,230,0.85);
+  }
+  .article-body h2 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2rem;
     color: var(--cream);
-    margin-bottom: 1rem;
+    margin: 2.5rem 0 1rem;
   }
-  @media (max-width: 900px) {
-    .articles-grid { grid-template-columns: 1fr; }
-    .empty-state { grid-column: span 1; }
+  .article-body h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin: 2rem 0 0.75rem;
+  }
+  .article-body p { margin-bottom: 1.5rem; }
+  .article-body a { color: var(--orange); }
+  .article-body strong { color: var(--cream); font-weight: 700; }
+  .article-body blockquote {
+    border-left: 3px solid var(--orange);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(244,239,230,0.7);
   }
 </style>
 
-<div class="page-header">
-  <div class="page-header-inner">
-    <p class="page-eyebrow">Tutti gli articoli</p>
-    <h1 class="page-title">Articoli</h1>
-  </div>
+<div class="article-hero">
+  <a href="/articoli" class="back-link">← Tutti gli Articoli</a>
+  <p class="article-category">{articolo.data.category}</p>
+  <h1 class="article-title">{articolo.data.title}</h1>
+  <p class="article-meta">
+    {new Date(articolo.data.date).toLocaleDateString('it-IT', {day:'numeric', month:'long', year:'numeric'})}
+  </p>
+  {articolo.data.thumbnail && (
+    <img src={articolo.data.thumbnail} alt={articolo.data.title} class="article-thumb" />
+  )}
 </div>
 
-<div class="articles-grid">
-  {sorted.length === 0 ? (
-    <div class="empty-state">
-      <h2>Nessun articolo ancora</h2>
-      <p>Gli articoli pubblicati dal CMS appariranno qui automaticamente.</p>
-    </div>
-  ) : (
-    sorted.map(articolo => (
-      <a href={`/articoli/${articolo.id}`} class="article-card">
-        {articolo.data.thumbnail
-          ? <img src={articolo.data.thumbnail} alt={articolo.data.title} class="card-thumb" />
-          : <div class="card-placeholder"><span class="card-placeholder-text">{articolo.data.category.slice(0,2).toUpperCase()}</span></div>
-        }
-        <div class="card-body">
-          <p class="card-category">{articolo.data.category}</p>
-          <h3 class="card-title">{articolo.data.title}</h3>
-          <p class="card-excerpt">{articolo.data.excerpt}</p>
-          <p class="card-date">{new Date(articolo.data.date).toLocaleDateString('it-IT', {day:'numeric',month:'long',year:'numeric'})}</p>
-        </div>
-      </a>
-    ))
-  )}
+<div class="article-body">
+  <Content />
 </div>
 </Base>
