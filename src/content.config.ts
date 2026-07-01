@@ -6,7 +6,7 @@ const articoli = defineCollection({
   schema: z.object({
     title: z.string(),
     category: z.string(),
-    date: z.string(),
+    date: z.coerce.string(),
     thumbnail: z.string().optional(),
     excerpt: z.string(),
   }),
@@ -18,7 +18,7 @@ const episodi = defineCollection({
     number: z.number(),
     title: z.string(),
     duration: z.string(),
-    date: z.string(),
+    date: z.coerce.string(),
     spotify: z.string().optional(),
     apple: z.string().optional(),
   }),
