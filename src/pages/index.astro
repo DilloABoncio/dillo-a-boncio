@@ -522,7 +522,7 @@ const ultimiEpisodi = episodi
   ) : (
     <div class="featured-grid">
       {ultimiArticoli.map((articolo, i) => (
-        <a href={`/articoli/${articolo.slug}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
+        <a href={`/articoli/${articolo.id}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
           {articolo.data.thumbnail
             ? <img src={articolo.data.thumbnail} alt={articolo.data.title} class="card-thumb" />
             : <div class="card-placeholder"><span class="card-placeholder-text">{articolo.data.category.slice(0,2).toUpperCase()}</span></div>
@@ -564,7 +564,7 @@ const ultimiEpisodi = episodi
       ) : (
         <div class="episode-list">
           {ultimiEpisodi.map(ep => (
-            <a href={`/podcast/${ep.slug}`} class="episode-item">
+            <a href={`/podcast/${ep.id}`} class="episode-item">
               <span class="ep-number">{ep.data.number}</span>
               <div>
                 <p class="ep-title">{ep.data.title}</p>
