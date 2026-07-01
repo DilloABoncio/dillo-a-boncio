@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const articoli = await getCollection('articoli');
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { articolo } = Astro.props;
-const { Content } = await articolo.render();
+const { Content } = await render(articolo);
 ---
 <Base title={articolo.data.title} description={articolo.data.excerpt}>
 <style>
