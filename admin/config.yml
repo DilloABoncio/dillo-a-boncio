@@ -1,19 +1,20 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: DilloABoncio/dillo-a-boncio
   branch: main
 
 locale: 'it'
-site_url: https://dilloaboncio.netlify.app
-display_url: https://dilloaboncio.netlify.app
-logo_url: https://dilloaboncio.netlify.app/images/logo.png
+site_url: https://dilloaboncio.pages.dev
+display_url: https://dilloaboncio.pages.dev
+logo_url: https://dilloaboncio.pages.dev/images/logo.png
 
-media_folder: "images"
+media_folder: "public/images"
 public_folder: "/images"
 
 collections:
   - name: "articoli"
     label: "Articoli"
-    folder: "_articoli"
+    folder: "src/content/articoli"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -26,7 +27,7 @@ collections:
 
   - name: "episodi"
     label: "Episodi Podcast"
-    folder: "_episodi"
+    folder: "src/content/episodi"
     create: true
     slug: "{{number}}-{{slug}}"
     fields:
