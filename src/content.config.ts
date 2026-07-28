@@ -19,8 +19,7 @@ const episodi = defineCollection({
     title: z.string(),
     duration: z.string(),
     date: z.coerce.string(),
-    spotify: z.string().optional(),
-    apple: z.string().optional(),
+    youtube: z.string().optional(),
   }),
 });
 
