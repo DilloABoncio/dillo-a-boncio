@@ -106,7 +106,11 @@ const { Content } = await render(ep);
     {ep.data.youtube && <a href={ep.data.youtube} class="platform-link">Guarda su YouTube</a>}
   </div>
 </div>
-
+{ep.data.thumbnail && (
+  <div class="ep-hero-img">
+    <img src={ep.data.thumbnail} alt={ep.data.title} style="width:100%;max-width:800px;margin:0 auto 3rem;display:block;border-radius:4px;" />
+  </div>
+)}
 <div class="ep-body">
   <Content />
 </div>
