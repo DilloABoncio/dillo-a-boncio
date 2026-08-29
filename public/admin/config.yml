@@ -21,12 +21,14 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
+      - {label: "Numero Episodio", name: "number", widget: "number"}
       - {label: "Titolo", name: "title", widget: "string"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["EuroLeague", "Basket Livornese", "Analisi", "Profili"]}
+      - {label: "Durata", name: "duration", widget: "string", hint: "Es: 45 min"}
       - {label: "Data", name: "date", widget: "datetime"}
-      - {label: "Immagine di copertina", name: "thumbnail", widget: "image", required: false}
-      - {label: "Estratto", name: "excerpt", widget: "text"}
-      - {label: "Contenuto", name: "body", widget: "markdown"}
+      - {label: "Immagine episodio", name: "thumbnail", widget: "image", required: false}
+      - {label: "Link YouTube", name: "youtube", widget: "string", required: false}
+      - {label: "Link Instagram", name: "instagram", widget: "string", required: false, hint: "Link al post Instagram dell'episodio"}
+      - {label: "Descrizione", name: "body", widget: "markdown"}
 
   - name: "episodi"
     label: "Episodi Podcast"
