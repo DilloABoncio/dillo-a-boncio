@@ -38,5 +38,6 @@ collections:
       - {label: "Titolo", name: "title", widget: "string"}
       - {label: "Durata", name: "duration", widget: "string", hint: "Es: 45 min"}
       - {label: "Data", name: "date", widget: "datetime"}
++     - {label: "Immagine di copertina", name: "thumbnail", widget: "image", required: false}
       - {label: "Link YouTube", name: "youtube", widget: "string", required: false}
       - {label: "Descrizione", name: "body", widget: "markdown"}
