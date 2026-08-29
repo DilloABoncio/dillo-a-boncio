@@ -153,7 +153,7 @@ const livornese = articoli
       <p>Gli articoli sul basket livornese appariranno qui automaticamente.</p>
     </div>
   ) : (
-    livornese.map(articolo => (
+    livornese.map((articolo, i) => (
       <a href={`/articoli/${articolo.id}`} class={`article-card${i === 0 ? ' tall' : ''}`}>
         {articolo.data.thumbnail
           ? <img src={articolo.data.thumbnail} alt={articolo.data.title} class="card-thumb" />
