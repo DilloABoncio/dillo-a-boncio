@@ -4,6 +4,7 @@ title: Gregorio Allinei
 duration: "1 ora "
 date: 2026-06-23T16:42:00.000+02:00
 youtube: https://youtu.be/boqF_3o0KMI?is=ogoEzEdCV-83Yz8a
+thumbnail: /images/img_0950.png 
 ---
 GREGORIO ALLINEI
 
