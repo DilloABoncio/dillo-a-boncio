@@ -23,7 +23,8 @@ const ultimiEpisodi = episodi
   }
   .ticker-inner {
     display: inline-flex;
-    animation: ticker 15s linear infinite;
+    animation: ticker 20s linear infinite;
+    will-change: transform;
   }
   .ticker-item {
     font-family: 'Bebas Neue', sans-serif;
@@ -133,7 +134,7 @@ const ultimiEpisodi = episodi
     text-decoration: none;
     transition: background 0.2s, transform 0.15s;
   }
-  .btn-primary:hover { background: #feb13c; transform: translateY(-1px); }
+  .btn-primary:hover { background: #F29201; transform: translateY(-1px); }
   .btn-secondary {
     font-size: 0.75rem;
     font-weight: 500;
@@ -144,14 +145,14 @@ const ultimiEpisodi = episodi
     transition: color 0.2s;
   }
   .btn-secondary:hover { color: var(--cream); }
-.hero-right {
+  .hero-right {
     background: linear-gradient(180deg, rgba(14,13,11,0.5), rgba(14,13,11,0.92)), url('/images/img_0605.jpg.jpeg');
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     border-left: 1px solid var(--divider);
-}
+  }
   .hero-right-inner {
     flex: 1;
     display: flex;
@@ -185,9 +186,24 @@ const ultimiEpisodi = episodi
   }
   .featured-tag {
     background: var(--ink2);
-    padding: 1.5rem 2rem;
+    padding: 0;
     margin-top: auto;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    transition: background 0.2s;
   }
+  .featured-tag:hover { background: var(--ink3); }
+  .featured-tag-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(30%) contrast(1.05);
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  .featured-tag:hover .featured-tag-img { opacity: 1; }
   .featured-tag-label {
     font-size: 0.65rem;
     font-weight: 700;
@@ -195,12 +211,19 @@ const ultimiEpisodi = episodi
     text-transform: uppercase;
     color: var(--orange);
     margin-bottom: 0.5rem;
+    padding: 1.25rem 1.5rem 0;
   }
   .featured-tag-title {
     font-family: 'DM Serif Display', serif;
     font-size: 1.1rem;
     color: var(--cream);
     line-height: 1.4;
+    padding: 0 1.5rem;
+  }
+  .featured-tag-meta {
+    font-size: 0.7rem;
+    color: var(--muted);
+    padding: 0.5rem 1.5rem 1.25rem;
   }
 
   section {
@@ -493,19 +516,23 @@ const ultimiEpisodi = episodi
         <span class="stat-number">100%</span>
         <span class="stat-label">Livornese<br>DOC</span>
       </div>
-{ultimiEpisodi[0] && (
-  <div class="featured-tag">
-    <p class="featured-tag-label">Ultimo Episodio</p>
-    <p class="featured-tag-title">{ultimiEpisodi[0].data.title}</p>
-  </div>
-)}
+      {ultimiEpisodi[0] && (
+        <a href={`/podcast/${ultimiEpisodi[0].id}`} class="featured-tag">
+          {ultimiEpisodi[0].data.thumbnail && (
+            <img src={ultimiEpisodi[0].data.thumbnail} alt={ultimiEpisodi[0].data.title} class="featured-tag-img" />
+          )}
+          <p class="featured-tag-label">Ultimo Episodio</p>
+          <p class="featured-tag-title">{ultimiEpisodi[0].data.title}</p>
+          <p class="featured-tag-meta">{ultimiEpisodi[0].data.duration}</p>
+        </a>
+      )}
     </div>
   </div>
 </div>
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
-    {['Basket Livornese','EuroLeague Analysis','Dillo a Boncio Podcast','Storie del Basket','Basket Livornese','EuroLeague Analysis','Dillo a Boncio Podcast','Storie del Basket'].map(item => (
+    {['Basket Livornese','EuroLeague Analysis','Dillo a Boncio Podcast','Pallacanestro Livorno','Play-In Tournament','Analisi Tattica','Storie del Basket','Basket Livornese','EuroLeague Analysis','Dillo a Boncio Podcast','Pallacanestro Livorno','Play-In Tournament','Analisi Tattica','Storie del Basket'].map(item => (
       <span class="ticker-item">{item} <span class="ticker-dot"></span></span>
     ))}
   </div>
@@ -553,8 +580,6 @@ const ultimiEpisodi = episodi
       <h2 class="podcast-headline">IL PODCAST<br>SUL BASKET<br>LIVORNESE</h2>
       <p class="podcast-desc">Ogni episodio un'immersione nel basket locale e internazionale. Ospiti, analisi tattiche, storie dimenticate e tanto EuroLeague.</p>
       <div class="platform-links">
-        
-        
         <a href="https://www.youtube.com/@DilloaBoncio" class="platform-link">YouTube</a>
       </div>
     </div>
