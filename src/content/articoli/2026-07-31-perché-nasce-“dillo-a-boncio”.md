@@ -2,6 +2,7 @@
 title: Perché nasce “Dillo a Boncio”
 category: Basket Livornese
 date: 2026-07-31T15:31:00.000+02:00
+thumbnail: /images/img_0063.jpg.jpeg
 excerpt: >-
   “Dillo a Boncio” nasce dalla volontà di dare voce a un movimento che ha
   segnato la storia sportiva della città, portando Livorno a essere un punto di
