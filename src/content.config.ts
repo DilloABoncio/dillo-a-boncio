@@ -21,6 +21,9 @@ const episodi = defineCollection({
     date: z.coerce.string(),
     thumbnail: z.string().optional(),
     youtube: z.string().optional(),
+    instagram: z.string().optional(),
+    spotify: z.string().optional(),
+    apple: z.string().optional(),
   }),
 });
 
